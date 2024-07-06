@@ -208,7 +208,7 @@ internal class Program
                     goto Menu;
                 }
             case "3":
-                if (medicineService.GetAllMedicines(activeUser.Id).Length == 0)
+                if (medicineService.GetAllMedicines(activeUser.Id).ToArray().Length == 0)
                 {
                     Console.WriteLine("medicine yaratmamisiniz");
                 }
