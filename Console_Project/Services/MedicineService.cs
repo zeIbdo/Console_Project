@@ -29,66 +29,69 @@ public class MedicineService
                 return DB.Medicines;
             }
         }
-        Console.WriteLine("user tapilmadi");
-        return null;
-
+        throw new NotFoundException("user tapilmadi");
     }
-    public Medicine GetMedicineById(int id)
+    public Medicine GetMedicineById(int id,int userIdd)
     {
-        foreach(var item in DB.Medicines)
+        foreach(var item in GetAllMedicines(userIdd))
         {
             if (item.Id == id)
             {
                 return item;
             }
         }
-        return null;
+        throw new NotFoundException("derman tapilmadi");
     }
-    public Medicine GetMedicineByName(string name)
+    public Medicine GetMedicineByName(string name, int userIdd)
     {
-        foreach(var item in DB.Medicines) { if (item.Name == name)
+        foreach(var item in GetAllMedicines(userIdd)) { if (item.Name == name)
             {
                 return item;
             } }
-        return null;
+        throw new NotFoundException("derman tapilmadi");
     }
-    public void GetMedicineByCategory(int categoryId)
+    public void GetMedicineByCategory(int categoryId,int userIdd)
     {
-        foreach (var item in DB.Medicines)
+        bool found = false;
+        foreach (var item in GetAllMedicines(userIdd))
         {
             if(item.CategoryId == categoryId)
             {
+                found = true;
                 Console.WriteLine(item);
             }
         }
+        if (found==false) { throw new NotFoundException("derman tapilmadi"); }
     }
-    public void RemoveMedicine(int id)
+    public void RemoveMedicine(int id,int userIdd)
     {
-        for (int i = 0; i <DB.Medicines.Length; i++)
+        var medicines = GetAllMedicines(userIdd);
+        for (int i = 0; i <medicines.Length; i++)
         {
-            if (DB.Medicines[i].Id == id)
+            if (medicines[i].Id == id)
             {
-                for(int j = id; j< DB.Medicines.Length-1; j++)
+                for(int j = id; j< medicines.Length - 1; j++)
                 {
-                    DB.Medicines[j] = DB.Medicines[j+1];
+                    medicines[j] = medicines[j+1];
                 }
-                Array.Resize(ref DB.Medicines, DB.Medicines.Length-1);
+                Array.Resize(ref medicines, medicines.Length-1);
                 return;                
             }            
         }
-        throw new NotFoundException("id tapilmadi");
+        throw new NotFoundException("derman tapilmadi");
     }
-    public void UpdateMedicine(int id,Medicine medicine)
+    public void UpdateMedicine(int id,int userIdd,Medicine medicine)
     {
-        for (int i = 0; i < DB.Medicines.Length; i++)
+        var medicines = GetAllMedicines(userIdd);
+        for (int i = 0; i < medicines.Length; i++)
         {
-            if (DB.Medicines[i].Id == id)
+            if (medicines[i].Id == id)
             {
-                DB.Medicines[i]= medicine;
+                medicines[i]= medicine;
                 return;
             }
 
         }
-        throw new NotFoundException("Tapilmadi");
+        throw new NotFoundException("derman Tapilmadi");
     }
 }
