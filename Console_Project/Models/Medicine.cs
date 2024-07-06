@@ -20,6 +20,17 @@ public class Medicine:BaseEntity
     }
     public override string ToString()
     {
-        return $"{Name} {Price} {CreatedTime.ToShortDateString()}";
+        Category category = new("");
+
+        foreach (var item in DB.Categories)
+        {
+            if (item.Id == CategoryId)
+            {
+                category = item;
+                break;
+            }
+        }
+        
+        return $"{Id} {Name} {Price} {CreatedTime.ToShortDateString()} {category.Name}";
     }
 }

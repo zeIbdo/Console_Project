@@ -1,4 +1,6 @@
-﻿namespace Console_Project.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Console_Project.Models;
 
 public class User:BaseEntity
 {
@@ -12,6 +14,7 @@ public class User:BaseEntity
         FullName = fullname;
         Email = mail;
         Password = password;
+       
     }
   
 }

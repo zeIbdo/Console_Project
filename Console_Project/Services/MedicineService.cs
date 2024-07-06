@@ -10,7 +10,7 @@ public class MedicineService
     {
         foreach (var item in DB.Categories)
         {
-            if (item.Id == medicine.Id)
+            if (item.Id == medicine.CategoryId)
             {
                 Array.Resize(ref DB.Medicines, DB.Medicines.Length + 1);
                 DB.Medicines[DB.Medicines.Length - 1] = medicine;
@@ -20,9 +20,18 @@ public class MedicineService
         throw new NotFoundException("Category tapilmadi");
 
     }
-    public Medicine[] GetAllMedicines()
+    public Medicine[] GetAllMedicines(int userId)
     {
-        return DB.Medicines;          
+        foreach(var item in DB.Users)
+        {
+            if (item.Id == userId)
+            {
+                return DB.Medicines;
+            }
+        }
+        Console.WriteLine("user tapilmadi");
+        return null;
+
     }
     public Medicine GetMedicineById(int id)
     {
@@ -49,7 +58,7 @@ public class MedicineService
         {
             if(item.CategoryId == categoryId)
             {
-                Console.WriteLine(item.ToString);
+                Console.WriteLine(item);
             }
         }
     }

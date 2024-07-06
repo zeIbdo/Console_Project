@@ -1,5 +1,6 @@
 ﻿using Console_Project.Models;
 using Console_Project.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace Console_Project.Services;
 
@@ -21,8 +22,16 @@ public class UserService
     }
     public void AddUser(User user)
     {
+
+        foreach (var item in DB.Users)
+        {
+            if (item.Email == user.Email)
+            {
+                throw new SameMailException("bu mail ile user artiq var");
+            }
+        }
         Array.Resize(ref DB.Users, DB.Users.Length+1);
         DB.Users[DB.Users.Length-1] = user;
     }
-    
+   
 }
